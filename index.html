@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Profile</title>
+    <style>
+
+        {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+	.navbar {
+	    position: fixed;
+	    top: 0;
+	    width: 100%;
+	    background: linear-gradient(to right, #ff7300, #ff4500);
+	    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+	    z-index: 1000;
+	    display: flex;
+	    justify-content: space-between; /* Separates clock and navbar links */
+	    align-items: center;
+	    padding: 10px 20px;
+	}
+
+	#digital-clock {
+	    font-size: 18px;
+	    font-weight: bold;
+	    color: white;
+	    font-family: 'Courier New', Courier, monospace;
+	    padding: 5px 10px;
+	    background: rgba(255, 255, 255, 0.2);
+	    border-radius: 5px;
+	    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	}
+
+	.navbar a {
+	    color: white;
+	    font-size: 16px;
+	    font-family: 'Roboto', Arial, sans-serif;
+	    text-decoration: none;
+	    padding: 10px 15px;
+	    margin: 0 5px;
+	    transition: background 0.3s, color 0.3s;
+	    border-radius: 5px;
+	}
+
+	.navbar a:hover {
+	    background: white;
+	    color: #ff4500;
+	    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+	}
+
+	.navbar .links {
+	    display: flex;
+	    gap: 10px;
+	}
+
+	.header {
+	    width: 100%;
+	    height: 100vh;
+	    background: linear-gradient(to right, #ff8c00, #ffa500);
+	    color: white;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+	    text-align: center;
+	    padding-top: 20px;
+	}
+
+	.header .container {
+	    display: flex;
+	    align-items: center;
+	    gap: 50px;
+	}
+
+	.header img {
+	    width: 300px;
+	    height: auto;
+	    border-radius: 50%;
+	    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+	}
+
+	.header h1 {
+	    font-size: 3.5em;
+	    font-weight: bold;
+	    margin-bottom: 15px;
+	}
+
+	.header p {
+	    margin-top: 10px;
+	    font-size: 1.3em;
+	}
+
+        .social-media-container {
+            position: fixed;
+            left: 0;
+            bottom: 20px; /* Position at the bottom left */
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Space between each icon */
+            z-index: 999;
+            align-items: center;
+        }
+
+        .contact-text {
+	    font-size: 16px; /* Adjust size as needed */
+	    font-weight: bold;
+	    color: #fff; /* White text color */
+	    background-color: #ff4500; /* Orange background to match the theme */
+	    padding: 10px 20px; /* Add padding around the text */
+	    border-radius: 5px; /* Rounded corners */
+	    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+	    text-transform: uppercase; /* Make the text uppercase */
+	    margin-bottom: 15px; /* Add space below the contact box */
+	    width: 100%; /* Full width of the container */
+	    text-align: center; /* Center align the text */
+	}
+
+
+        .social-icon {
+            width: 45px; /* Reduced size for each icon */
+            height: 45px; /* Reduced size for each icon */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+            transition: transform 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+            border-radius: 10px;
+        }
+
+        .social-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the image fully covers the square */
+        }
+
+        #telegram {
+            background-color: #0088cc;
+        }
+
+        #instagram {
+            background-color: #e4405f;
+        }
+
+        #whatsapp {
+            background-color: #25d366;
+        }
+
+        #email {
+            background-color: #d44638;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1); 
+        }
+
+        .social-icon {
+            animation: slideInFromLeft 0.5s ease-out forwards;
+        }
+
+        .social-icon:nth-child(1) {
+            animation-delay: 0s; 
+        }
+
+        .social-icon:nth-child(2) {
+            animation-delay: 0.2s; 
+        }
+
+        .social-icon:nth-child(3) {
+            animation-delay: 0.4s; 
+        }
+
+        .social-icon:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                left: 100%;
+            }
+            to {
+                left: 0;
+            }
+        }
+
+        .section-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        #about h2, #hobby h2, #education h2, #experience h2, #gallery h2 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #d35400;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        #about .about-content {
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+	    gap: 50px;
+	    flex-wrap: wrap;
+	}
+
+	.about-video {
+	    width: 30%;
+	    border-radius: 10px;
+	    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+	}
+
+	.about-text {
+	    width: 50%;
+	    text-align: left;
+	    color: #555;
+	}
+
+	.about-text p {
+	    font-size: 1.2em;
+	    line-height: 1.6;
+	    margin-bottom: 10px;
+	}
+
+        .hobby-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .hobby-item {
+            background: #fff5e6;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hobby-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .hobby-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .hobby-item p {
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        #education .timeline {
+            margin: 20px auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+	.timeline-img {
+	    width: 70px;
+	    height: 70px;
+	    object-fit: cover;
+	}
+
+
+        .timeline-content {
+            background: #fff5e6;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+        }
+
+        .timeline-content h3 {
+            color: #d35400;
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .timeline-content p {
+            font-size: 1em;
+            line-height: 1.5;
+            color: #555;
+        }
+
+	.experience-table {
+	    width: 80%;
+	    max-width: 900px;
+	    border-collapse: collapse;
+	    margin: 20px auto;
+	    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+	    background-color: #ffffff;
+	    border-radius: 10px;
+	    overflow: hidden;
+	}
+
+	.experience-table th, .experience-table td {
+	    padding: 15px;
+	    text-align: left;
+	    font-size: 0.95em;
+	}
+
+	.experience-table th {
+	    background-color: #3498db;
+	    color: #ffffff;
+	    text-transform: uppercase;
+	    font-weight: bold;
+	    letter-spacing: 1px;
+	}
+
+	.experience-table tr:nth-child(even) {
+	    background-color: #f1f8ff;
+	}
+
+	.experience-table tr:hover {
+	    background-color: #dfefff;
+	}
+
+	.experience-table td img {
+	    width: 80px;
+	    height: 80px;
+	    border-radius: 10%;
+	    display: inline-block;
+	    margin: 5px;
+	    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+	}
+
+	.experience-table td h3 {
+	    color: #3498db;
+	    font-size: 1em;
+	    margin-bottom: 5px;
+	}
+
+	.experience-table td p {
+	    font-size: 0.85em;
+	    color: #555;
+	    margin: 5px 0;
+	    line-height: 1.6;
+	}
+
+	#gallery .gallery-grid {
+	    display: grid;
+	    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	    gap: 15px;
+	    padding: 10px;
+	}
+
+	#gallery .gallery-item {
+	    position: relative;
+	    overflow: hidden;
+	    border-radius: 10px;
+	    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+	    transition: transform 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	#gallery .gallery-item img {
+	    height: 100%;
+	    width: 100%;
+	    object-fit: cover;
+	    transition: transform 0.3s ease;
+	}
+
+	#gallery .gallery-item:hover {
+	    transform: scale(1.05);
+	    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+	}
+
+	#gallery .gallery-item:hover img {
+	    transform: scale(1.1);
+	}
+
+
+	#background-video {
+	    position: fixed;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    object-fit: cover;
+	    z-index: -1;
+	}
+	</style>
+	</head>
+<body>
+
+    <video autoplay muted loop playsinline id="background-video">
+        <source src="bergerak.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="header">
+        <img src="Self1.png" alt="Self Image">
+        <div>
+            <h1>Hi, My Name is Adam Sufi</h1>
+            <p>Welcome to my personal profile website!</p>
+        </div>
+    </div>
+
+    <div class="navbar">
+    <div id="digital-clock"></div> 
+    <div class="links"> 
+        <a href="#about">About</a>
+        <a href="#hobby">Hobby</a>
+	<a href="#education">Education</a>
+        <a href="#experience">Experience</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#top">Top ↑</a>
+    </div>
+</div>
+
+
+    <div id="about" class="section-container">
+    <h2>About Me</h2>
+    <div class="about-content">
+        <video autoplay muted loop playsinline class="about-video">
+            <source src="mine.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="about-text">
+            <p><strong>Name:</strong> Adam Sufi bin Abdul Aziz</p>
+            <p><strong>Age:</strong> 20</p>
+            <p><strong>Location:</strong> Johor Bahru, Johor</p>
+            <p><strong>Siblings:</strong> 5 siblings</p>
+            <p><strong>About Me:</strong> I'm an enthusiastic and curious individual with a passion for technology and creativity. I enjoy exploring new things and constantly strive to improve myself.</p>
+            <p><strong>Hobbies:</strong> Besides sports and enjoying sunsets, I am passionate about coding, exploring new software tools, and photography.</p>
+            <p><strong>Academic Goals:</strong> I am currently pursuing a Bachelor's degree in Information Technology and aim to specialize in web development and data analysis.</p>
+            <p><strong>Career Aspirations:</strong> My dream is to work as a software developer in a leading tech company and contribute to building impactful digital solutions.</p>
+            <p><strong>Fun Fact:</strong> I'm a huge fan of Cristiano Ronaldo and never miss watching his matches!</p>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Hobby Section -->
+    <div id="hobby" class="section-container">
+        <h2>Hobby</h2>
+        <div class="hobby-grid">
+            <div class="hobby-item">
+                <img src="futsal.jpg" alt="Futsal" class="hobby-img">
+                <p>I enjoy playing street soccer with my friends.</p>
+            </div>
+            <div class="hobby-item">
+                <img src="pingpong.jpg" alt="Table Tennis" class="hobby-img">
+                <p>I also enjoy playing table tennis during the semester.</p>
+            </div>
+            <div class="hobby-item">
+                <img src="sunset.jpg" alt="Beach" class="hobby-img">
+                <p>I love spending time at the beach, enjoying sunsets with friends.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="education" class="section-container">
+    <h2>My Education</h2>
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-icon">
+                <img src="sk.jpg" alt="Pimary School" class="timeline-img">
+            </div>
+            <div class="timeline-content">
+                <h3>Primary School</h3>
+                <p>Graduated from SMK XYZ with excellent results in science and mathematics.</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-icon">
+                <img src="sma.jpeg" alt="High School" class="timeline-img">
+            </div>
+            <div class="timeline-content">
+                <h3>High School</h3>
+                <p>Currently pursuing a Bachelor's degree in Information Technology at ABC University.</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-icon">
+                <img src="uni.jpg" alt="University" class="timeline-img">
+            </div>
+            <div class="timeline-content">
+                <h3>University</h3>
+                <p>Currently pursuing a Bachelor's degree in Information Technology at ABC University.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <div class="social-media-container">
+    <div class="contact-text">Contact:</div>
+    <a href="https://t.me/yourusername" target="_blank" class="social-icon" id="telegram">
+        <img src="tele.png" alt="Telegram">
+    </a>
+    <a href="https://www.instagram.com/yourusername/" target="_blank" class="social-icon" id="instagram">
+        <img src="ig.png" alt="Instagram">
+    </a>
+    <a href="https://wa.me/yourphonenumber" target="_blank" class="social-icon" id="whatsapp">
+        <img src="ws.png" alt="WhatsApp">
+    </a>
+    <a href="mailto:your-email@example.com" target="_blank" class="social-icon" id="email">
+        <img src="email.png" alt="Email">
+    </a>
+</div>
+
+
+	<div id="experience" class="section-container">
+    <h2>My Experience</h2>
+    <table class="experience-table">
+        <thead>
+            <tr>
+                <th>Picture</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td><img src="makan1.jpg" alt="Company 1 Logo"><img src="makan2.jpg" alt="Company 1 Logo"><img src="makan3.jpg" alt="Company 1 Logo"><img src="makan4.jpg" alt="Company 1 Logo"></td>
+                <td>
+                    Contributed to front-end development projects and improved website performance. 
+                    Gained hands-on experience in responsive web design.
+                </td>
+            </tr>
+
+            <tr>
+                <td><img src="ppd1.jpg" alt="PPD"><img src="ppd2.jpg" alt="PPD"><img src="ppd3.jpg" alt="PPD"><img src="ppd4.jpg" alt="PPD"></td>
+                <td>
+                    Assisted in developing mobile applications and backend APIs, focusing on agile development.
+                </td>
+            </tr>
+
+            <tr>
+                <td><img src="ml1.jpg" alt="ML"><img src="ml2.jpg" alt="ML"><img src="ml3.jpg" alt="ML"><img src="ml4.jpg" alt="ML"></td>
+                <td>
+                    Provided web design services for local businesses, enhancing their digital presence and user experience.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+	<div id="gallery" class="section-container">
+	    <h2>Gallery</h2>
+	    <div class="gallery-grid">
+        <a href="uni.html" class="gallery-item">
+            <img src="gallery1.jpg" alt="Gallery Image 1">
+        </a>
+        <a href="fellow.html" class="gallery-item">
+            <img src="gallery3.jpg" alt="Gallery Image 2">
+        </a>
+        <a href="family.html" class="gallery-item">
+            <img src="gallery4.jpg" alt="Gallery Image 3">
+        </a>
+        <a href="random.html" class="gallery-item">
+            <img src="gallery2.jpg" alt="Gallery Image 4">
+        </a>
+	</div>
+
+
+
+    <script>
+        function updateDigitalClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('digital-clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        setInterval(updateDigitalClock, 1000);
+        updateDigitalClock();
+    </script>
+</body>
+</html>
